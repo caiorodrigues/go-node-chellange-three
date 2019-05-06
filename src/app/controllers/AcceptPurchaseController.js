@@ -15,6 +15,14 @@ class AcceptPurchaseController {
       return res.status(401).json({ error: "This isn't the ad author." })
     }
 
+    if (ad.purchasedBy) {
+      return res
+        .status(400)
+        .json({ error: 'This ad has already been purchased.' })
+    }
+
+    ad.purchasedBy = id
+
     await ad.save()
 
     return res.json(ad)
